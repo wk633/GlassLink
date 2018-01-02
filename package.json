@@ -1,0 +1,22 @@
+{
+  "name": "glasslink",
+  "version": "1.0.0",
+  "description": "A job hunting web application which collects job information posted in glassdoor and linkedin.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wk633/GlassLink.git"
+  },
+  "author": "Kai Wang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wk633/GlassLink/issues"
+  },
+  "homepage": "https://github.com/wk633/GlassLink#readme",
+  "dependencies": {
+    "puppeteer": "^0.13.0"
+  }
+}
