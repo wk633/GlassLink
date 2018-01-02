@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
+const utils = require('./utils');
 
 const log = console.log
 
@@ -26,12 +27,11 @@ async function main () {
             log(requestUrl);
             const page = await browser.newPage();
             await page.goto(requestUrl);
-            await page.waitFor(1000); // wait extra 1s
-            log('wait 1s end');
+            await page.waitFor(1000); // wait extra 5s
+            log('wait 5s end');
             const rawJobData = await page.evaluate(()=>{
-                function queryInnerText(item, selector){
-                    return ;
-                }
+                window.scrollTo(0,document.body.scrollHeight);
+
                 const list = document.querySelectorAll('li.job-listing');
                 NodeList.prototype.map = Array.prototype.map;
                 return list.map(item=>{
@@ -44,13 +44,19 @@ async function main () {
                         source: 'linkedin',
                         desc: item.querySelector('.job-description').innerText,
                         identifier: '',
-                        logoUrl: item.querySelector('.company-logo').src,
+                        logoUrl: item.querySelector('img.company-logo').getAttribute('data-delayed-url'),
                         detailUrl: item.querySelector('a.job-title-link').innerText
                     };
                     return tmp;
                 })
             })
             console.log(rawJobData);
+            const processed = rawJobData.map(item=>{
+                item.postDate = utils.postDateGen(item.postDateRaw);
+                item.identifier = utils.identifierGen(item.company, item.job, item.location, item.postDate);
+                return item;
+            })
+            console.log(processed);
             await page.close();
             await browser.close();
         }
