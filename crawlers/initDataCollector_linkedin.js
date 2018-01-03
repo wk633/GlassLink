@@ -27,7 +27,7 @@ async function main () {
             log(requestUrl);
             const page = await browser.newPage();
             await page.goto(requestUrl);
-            await page.waitFor(1000); // wait extra 5s
+            await page.waitFor(1000); // wait extra 1s
             log('wait 5s end');
             const rawJobData = await page.evaluate(()=>{
                 window.scrollTo(0,document.body.scrollHeight);

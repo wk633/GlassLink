@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/wk633/GlassLink#readme",
   "dependencies": {
+    "mongoose": "^5.0.0-rc1",
     "puppeteer": "^0.13.0",
     "utility": "^1.13.1"
   }
