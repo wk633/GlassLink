@@ -7,19 +7,23 @@ data.data.map(item=>{
 })
 // console.log(data.data);
 
-const model = require('../models/model');
-const Linkedin = model.getModel('linkedin');
-console.log(Linkedin);
-function saveTest(){
-    data.data.map((item)=>{
+
+const mongoose = require('mongoose');
+const conn = mongoose.createConnection(require('../config').DB.URL);
+const Linkedin = require('../models/linkedin')(conn);
+
+async function saveTest(){
+    await Promise.all(data.data.map(async (item)=>{
         linkedinModel = new Linkedin(item);
-        linkedinModel.save((e, d)=>{
-            if(e) {
-                console.log(e);
-            }else{
-                console.log(d);
-            }
-        })
-    })
+        try{
+            const d = await linkedinModel.save();
+            console.log(d);
+        }catch(e){
+            console.log('error!!!');
+            console.log(e);
+        }
+    }))
+    await conn.close();
+
 }
 saveTest();
