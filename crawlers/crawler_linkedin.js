@@ -7,23 +7,17 @@ const conn = mongoose.createConnection(require('../config').DB.URL);
 const Linkedin = require('../models/linkedin')(conn);
 
 
-
 const log = console.log
 
-async function main () {
+module.exports = async function main (prefix, dataRel, pageMax, pageWaitMax) {
     log('start main function');
     try{
         const browser = await puppeteer.launch({headless: false, args: ['--no-sandbox', '--disable-setuid-sandbox']});
-        const prefix = 'https://www.linkedin.com/jobs/search?';
-        let data = {
-            'keywords': 'Software+Engineer+Intern',
-            'sortBy': 'R',
-            'locationId': 'us:0',
-            'start': 0,
-            'count': 25
-        }
+        // const prefix = 'https://www.linkedin.com/jobs/search?';
+        let data = dataRel;
+
         const page = await browser.newPage();
-        for(let i = 0; i < 8; i++){
+        for(let i = 0; i < pageMax; i++){
             data.start = 25 * i;
             let dataArr = [];
             for(let k in data){
@@ -32,7 +26,16 @@ async function main () {
             const requestUrl = prefix + dataArr.join('&');
             log(requestUrl);
             await page.goto(requestUrl, {waitUntil: 'networkidle2'});
-            await page.waitFor(1000); // wait extra 1s
+            await page.waitFor(3000);
+            await page.evaluate(()=>{
+                const div = document.querySelector('.jserp-container')
+                for(let k = 1; k <= 5; k++) {
+                    setTimeout(()=>{
+                        window.scrollBy(0, div.scrollHeight * k / 5);
+                    }, 1000*k)
+                }
+            })
+            await page.waitFor(1000);
             // log('wait 5s end');
             const rawJobData = await page.evaluate(()=>{
                 const list = document.querySelectorAll('li.job-listing');
@@ -83,10 +86,8 @@ async function main () {
         await page.close();
         await conn.close();
         await browser.close();
-
     }catch(e){
         log(e);
         process.exit();
     }
 }
-main();
