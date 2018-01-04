@@ -12,5 +12,8 @@ function main(){
     linkedinRequest(prefix, dataDD, pageMax, pageWaitMax);
     
 }
-
-setInterval(main(), 1000*60*60)
+function run(){
+    main();
+    setInterval(main, 1000*60*60*2);
+}
+run()
