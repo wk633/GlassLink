@@ -58,39 +58,39 @@ async function main(){
         })
         await save(info.firstPageData);
 
-        // for(let i = 0; i < info.nextPages.length; i++) {
-        //     await page.goto(info.nextPages[i], {waitUntil: 'networkidle2'});
-        //     let infoTmp = await page.evaluate(()=>{
-        //         let lists = document.querySelectorAll('.jl');
-        //         NodeList.prototype.map = Array.prototype.map;
-        //         const div = document.querySelector('.jlGrid')
-        //         for(let k = 1; k <= 5; k++) {
-        //             setTimeout(()=>{
-        //                 window.scrollBy(0, div.scrollHeight * k / 5);
-        //             }, 1000*k)
-        //         }
-        //         return lists.map(item=>{
-        //             const rightBlock = item.querySelector('.logoWrap+div');
-        //             const companyAndLoc  = rightBlock.querySelector('.empLoc').innerText.split(' – ');
-        //             const postDate = rightBlock.querySelector('.minor');
-        //             const logo = item.querySelector('img');
-        //             let tmp = {
-        //                 job: rightBlock.querySelector('.jobLink').innerText,
-        //                 company: companyAndLoc[0],
-        //                 location: companyAndLoc[1].substr(0, companyAndLoc[1].length - 1),
-        //                 postDateRaw: postDate ? postDate.innerText : '',
-        //                 postDate: '',
-        //                 source: 'glassdoor',
-        //                 desc: '',
-        //                 identifier: '',
-        //                 logoUrl: logo ? logo.getAttribute('data-original') : '',
-        //                 detailUrl: item.querySelector('a.jobLink').href
-        //             };
-        //             return tmp;
-        //         })
-        //     })
-        //     await save(infoTmp);
-        // }
+        for(let i = 0; i < info.nextPages.length; i++) {
+            await page.goto(info.nextPages[i], {waitUntil: 'networkidle2'});
+            let infoTmp = await page.evaluate(()=>{
+                let lists = document.querySelectorAll('.jl');
+                NodeList.prototype.map = Array.prototype.map;
+                const div = document.querySelector('.jlGrid')
+                for(let k = 1; k <= 5; k++) {
+                    setTimeout(()=>{
+                        window.scrollBy(0, div.scrollHeight * k / 5);
+                    }, 1000*k)
+                }
+                return lists.map(item=>{
+                    const rightBlock = item.querySelector('.logoWrap+div');
+                    const companyAndLoc  = rightBlock.querySelector('.empLoc').innerText.split(' – ');
+                    const postDate = rightBlock.querySelector('.minor');
+                    const logo = item.querySelector('img');
+                    let tmp = {
+                        job: rightBlock.querySelector('.jobLink').innerText,
+                        company: companyAndLoc[0],
+                        location: companyAndLoc[1].substr(0, companyAndLoc[1].length - 1),
+                        postDateRaw: postDate ? postDate.innerText : '',
+                        postDate: '',
+                        source: 'glassdoor',
+                        desc: '',
+                        identifier: '',
+                        logoUrl: logo ? logo.getAttribute('data-original') : '',
+                        detailUrl: item.querySelector('a.jobLink').href
+                    };
+                    return tmp;
+                })
+            })
+            await save(infoTmp);
+        }
         await page.close()
         await browser.close();
         await conn.close();
