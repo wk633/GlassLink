@@ -19,8 +19,16 @@ function postDateGen(rawPostDate){
     const adjusted = new Date(nowDate - delta * 1000*60*60*24);
     return adjusted;
 }
+function attributeCombine(data){
+    let dataArr = [];
+    for(let k in data){
+        dataArr.push(k + '=' + data[k]);
+    }
+    return dataArr.join('&')
+}
 
 module.exports = {
     identifierGen,
-    postDateGen
+    postDateGen,
+    attributeCombine
 }
