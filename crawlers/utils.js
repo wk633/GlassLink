@@ -27,8 +27,19 @@ function attributeCombine(data){
     return dataArr.join('&')
 }
 
+function glassdoorPostDateGen(rawPostDate){
+    const nowDate = new Date();
+    let delta = 0;
+    if(rawPostDate !== '' && rawPostDate !== 'NEW' && rawPostDate !== 'HOT'){
+        delta = parseInt(rawPostDate.split(' ')[0]) - 1;
+    }
+    const adjusted = new Date(nowDate - delta * 1000*60*60*24);
+    return adjusted;
+}
+
 module.exports = {
     identifierGen,
     postDateGen,
-    attributeCombine
+    attributeCombine,
+    glassdoorPostDateGen
 }
