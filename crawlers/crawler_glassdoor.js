@@ -7,7 +7,7 @@ const Glassdoor = require('../models/glassdoor')(conn);
 
 const log = console.log
 
-async function main(){
+module.exports = async function main(){
     try{
         const browser = await puppeteer.launch({headless: false, args: ['--no-sandbox', '--disable-setuid-sandbox']});
         const page = await browser.newPage();
@@ -121,5 +121,3 @@ async function save(info){
     })
     return;
 }
-
-main();

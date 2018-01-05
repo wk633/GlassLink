@@ -19,6 +19,7 @@
   "dependencies": {
     "mongoose": "^5.0.0-rc1",
     "puppeteer": "^0.13.0",
+    "shelljs": "^0.7.8",
     "utility": "^1.13.1"
   }
 }
