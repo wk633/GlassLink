@@ -50,3 +50,29 @@ https://www.linkedin.com/jobs/search?keywords=Software+Engineering+Intern&sortBy
 To collect some data, we only need crawl first 100 job.
 
 In the future, we need to monitor jobs sort by post date
+
+
+
+
+
+### glassdoor search analysis
+
+an internship search example:
+
+https://www.glassdoor.com/Job/jobs.htm?suggestCount=0&suggestChosen=false&clickSource=searchBtn&typedKeyword=software+engineer+internship&sc.keyword=software+engineer+internship&locT=&locId=&jobType=internship
+
+
+
+prefix: https://www.glassdoor.com/Job/jobs.htm?
+
+| key           | value                        |
+| ------------- | ---------------------------- |
+| suggestCount  | 0                            |
+| suggestChosen | false                        |
+| clickSource   | searchBtn                    |
+| typedKeyword  | software+engineer+internship |
+| sc.keyword    | software+engineer+internship |
+| locT          |                              |
+| locId         |                              |
+| jobType       | internship                   |
+
