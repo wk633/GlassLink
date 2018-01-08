@@ -2,7 +2,7 @@ var shell = require("shelljs");
 shell.exec('node monitor_linkedin.js');
 setInterval(()=>{
     shell.exec('node monitor_linkedin.js');
-}, 60*1000*60)
+}, 60*1000*10)
 
 setTimeout(()=>{
     shell.exec('node monitor_glassdoor.js');

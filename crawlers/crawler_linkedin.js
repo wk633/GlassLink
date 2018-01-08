@@ -12,11 +12,10 @@ const log = console.log
 module.exports = async function main (prefix, dataRel, pageMax, pageWaitMax) {
     log('start main function');
     try{
-        const browser = await puppeteer.launch({headless: false, args: ['--no-sandbox', '--disable-setuid-sandbox']});
+        let browser = await puppeteer.launch({headless: false, args: ['--no-sandbox', '--disable-setuid-sandbox']});
         // const prefix = 'https://www.linkedin.com/jobs/search?';
         let data = dataRel;
-
-        const page = await browser.newPage();
+        let page = await browser.newPage();
         for(let i = 0; i < pageMax; i++){
             data.start = 25 * i;
             let dataArr = [];
@@ -71,7 +70,7 @@ module.exports = async function main (prefix, dataRel, pageMax, pageWaitMax) {
                         identifier: item.identifier
                     },item, {upsert: true, new: true} ) // if not exist, insert it
                     if(d != null){
-                        log(`${d.company} - ${d.job} saved or updated`)
+                        // log(`${d.company} - ${d.job} saved or updated`)
                     }else{
                         log('doc is null')
                     }
@@ -81,11 +80,14 @@ module.exports = async function main (prefix, dataRel, pageMax, pageWaitMax) {
                     log(e);
                 }
             }))
-            
         }
-        await page.close();
+
         await conn.close();
+        log('connection close---')
+        await page.close();
+        log('page close----');
         await browser.close();
+        log('browser close----')
     }catch(e){
         log(e);
         process.exit();

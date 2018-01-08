@@ -1,6 +1,6 @@
 module.exports = {
     prefix: 'https://www.linkedin.com/jobs/search?',
-    pageMax: 4,
+    pageMax: 2,
     pageWaitMax: 10*1000,
     sortByDate: {
         'keywords': 'Software+Engineer+Intern',
