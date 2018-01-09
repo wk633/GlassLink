@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import App from './app';
-
+import './axios.config.js';
 
 ReactDOM.render(<App/>, document.getElementById('root'));
 

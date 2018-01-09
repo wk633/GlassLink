@@ -17,7 +17,6 @@ const { Header, Content} = Layout;
 
 class App extends React.Component{
     render(){
-        console.log(this)
         return (
             <BrowserRouter>
                 <Layout className="layout">
