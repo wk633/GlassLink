@@ -1,10 +1,13 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import { Form, Icon, Input, Button} from 'antd';
+import { Form, Icon, Input, Button, message} from 'antd';
 import axios from 'axios';
 import './signup.css';
 
 const FormItem = Form.Item;
+message.config({
+    top: 54
+})
 
 @Form.create()
 class SignUp extends React.Component{
@@ -45,9 +48,9 @@ class SignUp extends React.Component{
                 if(res.status === 200){
                     if(res.data.code === 0){
                         // do something
-                        console.log('sign up success');
+                        message.success('sign up success');
                     }else{
-                        console.log(res.data.errmsg);
+                        message.error(res.data.errmsg);
                     }
                 }
             })
