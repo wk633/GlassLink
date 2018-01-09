@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const conn = mongoose.createConnection(require('./config').DB);
 const User = require('./model/user')(conn);
 
+const utils = require('utility');
+
 Router.get('/info', (req, res)=>{
     const {userId} = req.cookies;
     if(!userId){
@@ -23,7 +25,7 @@ Router.post('/signup', (req, res)=>{
     User.findOne({'user': user}, (err, doc)=>{
         if(err) return res.json({code: 1, errmsg: 'db query error'});
         if(doc) return res.json({code: 1, errmsg: 'duplicate username'});
-        const userModel = new User({user, pwd});
+        const userModel = new User({user, pwd: md5pwd(pwd)});
         userModel.save((e, d) => {
             if(e){
                 return res.json({code: 1, errmsg: 'db save error'});
@@ -36,5 +38,10 @@ Router.post('/signup', (req, res)=>{
         })
     })
 })
+
+function md5pwd(pwd){
+    const salt = "somecrazyrandomstringpassword@~~@";
+    return utils.md5(utils.md5(pwd + salt));
+}
 
 module.exports = Router;
