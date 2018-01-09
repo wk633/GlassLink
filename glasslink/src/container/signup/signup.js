@@ -38,13 +38,17 @@ class SignUp extends React.Component{
         this.props.form.validateFields((err, values) => {
           if (!err) {
             console.log('Received values of form: ', values);
-            
+
             axios.post('/user/signup', {user: values.userName, pwd: values.password})
             .then(res=>{
                 console.log(res);
-                if(res.status === 200 && res.data.code === 0){
-                    // do something
-                    console.log('sign up success');
+                if(res.status === 200){
+                    if(res.data.code === 0){
+                        // do something
+                        console.log('sign up success');
+                    }else{
+                        console.log(res.data.errmsg);
+                    }
                 }
             })
           }

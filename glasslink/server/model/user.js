@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 const schema = new mongoose.Schema({
-    'name': {type: String},
-    'password': {type: String},
-    'updateDate': {type: Date}
+    'user': {type: String},
+    'pwd': {type: String}
 });
 
 module.exports = function(conn){
