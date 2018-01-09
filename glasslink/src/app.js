@@ -20,7 +20,7 @@ class App extends React.Component{
         return (
             <BrowserRouter>
                 <Layout className="layout">
-                    <Header>
+                    <Header style={{height: 48}}>
                     <div className="logo" />
                     <MyMenu></MyMenu>
                     </Header>

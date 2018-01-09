@@ -14,7 +14,7 @@ class MyMenu extends React.Component{
                 theme="dark"
                 mode="horizontal"
                 selectedKeys={[selectedIdx+'']}
-                style={{ lineHeight: '64px' }}
+                style={{ lineHeight: '48px' }}
             >
                 <Menu.Item key="1"><Link to='/joblist'>Job List</Link></Menu.Item>
                 <Menu.Item key="2"><Link to='/application'>Application</Link></Menu.Item>
