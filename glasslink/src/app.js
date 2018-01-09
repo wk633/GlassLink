@@ -12,7 +12,6 @@ import {
   Switch,
   Link
 } from 'react-router-dom';
-import withRouter from 'react-router-dom/withRouter';
 import MyMenu from './component/menu/menu';
 const { Header, Content} = Layout;
 
@@ -22,7 +21,6 @@ class App extends React.Component{
         return (
             <BrowserRouter>
                 <Layout className="layout">
-
                     <Header>
                     <div className="logo" />
                     <MyMenu></MyMenu>
@@ -33,7 +31,6 @@ class App extends React.Component{
                             <Breadcrumb.Item>Job List</Breadcrumb.Item>
                         </Breadcrumb>
                         <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
-                            content
                             <AuthRouter></AuthRouter>
                             <Switch>
                                 <Route path='/joblist' component={JobList}></Route>

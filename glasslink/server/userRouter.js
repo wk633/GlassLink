@@ -17,4 +17,10 @@ Router.get('/info', (req, res)=>{
     })
 })
 
+Router.post('/signup', (req, res)=>{
+    const {user, pwd} = req.body;
+    console.log(user, pwd);
+    res.json({code: 0});
+})
+
 module.exports = Router;

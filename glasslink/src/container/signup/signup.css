@@ -1,0 +1,8 @@
+.signup-form{
+    max-width: 400px;
+    flex: 1;
+}
+.signup-form-wrapper{
+    display: flex;
+    justify-content: center;
+}
