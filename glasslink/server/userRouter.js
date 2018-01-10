@@ -39,6 +39,21 @@ Router.post('/signup', (req, res)=>{
     })
 })
 
+Router.post('/login', (req, res)=>{
+    const {user, pwd} = req.body;
+    console.log(user, pwd);
+    User.findOne({'user': user, 'pwd': md5pwd(pwd)}, (err, doc)=>{
+        if(err) return res.json({code: 1, errmsg: 'db query error'});
+        if(doc) {
+            const {user, _id} = doc;
+            res.cookie('userId', _id);
+            return res.json({code: 0, data:{user, _id}});
+        }else{
+            res.json({code:1, errmsg: 'username or password wrong'})
+        }
+    })
+})
+
 function md5pwd(pwd){
     const salt = "somecrazyrandomstringpassword@~~@";
     return utils.md5(utils.md5(pwd + salt));

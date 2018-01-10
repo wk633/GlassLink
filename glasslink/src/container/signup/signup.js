@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import { Form, Icon, Input, Button, message} from 'antd';
 import axios from 'axios';
 import './signup.css';
@@ -10,6 +10,7 @@ message.config({
 })
 
 @Form.create()
+@withRouter
 class SignUp extends React.Component{
     state = {
         confirmDirty: false
@@ -44,14 +45,16 @@ class SignUp extends React.Component{
 
             axios.post('/user/signup', {user: values.userName, pwd: values.password})
             .then(res=>{
-                console.log(res);
                 if(res.status === 200){
                     if(res.data.code === 0){
                         // do something
                         message.success('sign up success');
+                        this.props.history.push('/joblist');
                     }else{
                         message.error(res.data.errmsg);
                     }
+                }else{
+                    message.error('network error');
                 }
             })
           }
