@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const schema = new mongoose.Schema({
+    '_id': {type: mongoose.Schema.Types.ObjectId, ref: 'Notification'},
     'company': {type: String},
     'job': {type: String},
     'location': {type: String},
