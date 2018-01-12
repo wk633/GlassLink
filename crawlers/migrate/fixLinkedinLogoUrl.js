@@ -4,9 +4,10 @@ const Job = require('../../models/job')(conn);
 async function main(){
     try{
         const d = await Job.find({'source': 'linkedin'});
-        await d.map(async (item)=>{
-            if(item.logoUrl.startsWith('/')){
-                let newLogoUrl = 'www.linkedin.com' + item.logoUrl;
+        for(let i = 0; i < d.length; i++){
+            let item = d[i];
+            if(item.logoUrl.startsWith('www')){
+                let newLogoUrl = 'http://www.linkedin.com' + item.logoUrl;
                 let id = item._id;
                 
                 try{
@@ -17,7 +18,7 @@ async function main(){
                 }
                 
             }
-        })
+        }
         await conn.close();
     }catch(e){
         console.log(e);
