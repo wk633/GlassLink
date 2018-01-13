@@ -58,12 +58,12 @@ Router.post('/login', (req, res)=>{
 
 Router.get('/notification', (req, res)=>{
     const {userId} = req.cookies;
-    let {start} = req.query;
+    let {start, source} = req.query;
     if(!start || parseInt(start, 0) < 0){start = 0}
     start = parseInt(start, 0);
     if(!userId) return res.json({code: 1, errmsg: 'no userId, please log in first'});
     Notification
-    .find({'userId': '5a5686ca732cb113f4027d6b', 'status': 'unread'})
+    .find({'userId': '5a5686ca732cb113f4027d6b', 'status': 'unread', 'source': source})
     .sort({'postDate': -1})
     .skip(start)
     .limit(30)
