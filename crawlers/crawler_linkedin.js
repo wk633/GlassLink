@@ -4,7 +4,7 @@ const utils = require('./utils');
 
 const mongoose = require('mongoose');
 const conn = mongoose.createConnection(require('../config').DB.URL);
-const Linkedin = require('../models/linkedin')(conn);
+const Job = require('../models/job')(conn);
 
 
 const log = console.log
@@ -50,7 +50,7 @@ module.exports = async function main (prefix, dataRel, pageMax, pageWaitMax) {
                         desc: item.querySelector('.job-description').innerText,
                         identifier: '',
                         logoUrl: item.querySelector('img.company-logo').getAttribute('data-delayed-url'),
-                        detailUrl: item.querySelector('a.job-title-link').innerText
+                        detailUrl: item.querySelector('a.job-title-link').href
                     };
                     return tmp;
                 })
@@ -66,7 +66,7 @@ module.exports = async function main (prefix, dataRel, pageMax, pageWaitMax) {
             await Promise.all(processed.map(async(item) => {
                 // let linkedinModel = new Linkedin(item);
                 try{
-                    const d = await Linkedin.findOneAndUpdate({
+                    const d = await Job.findOneAndUpdate({
                         identifier: item.identifier
                     },item, {upsert: true, new: true} ) // if not exist, insert it
                     if(d != null){
