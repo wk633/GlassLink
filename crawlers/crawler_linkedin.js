@@ -66,6 +66,9 @@ module.exports = async function main (prefix, dataRel, pageMax, pageWaitMax) {
             await Promise.all(processed.map(async(item) => {
                 // let linkedinModel = new Linkedin(item);
                 try{
+                    if(item.logoUrl.startsWith('/')){
+                        item.logoUrl = 'http://www.linkedin.com' + item.logoUrl;
+                    }
                     const d = await Job.findOneAndUpdate({
                         identifier: item.identifier
                     },item, {upsert: true, new: true} ) // if not exist, insert it
