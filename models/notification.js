@@ -5,7 +5,7 @@ const schema = new Schema({
     'userId': {type: ObjectId},
     'jobId': {type: ObjectId, ref:'Job'},
     'postDate': {type: Date},
-    'source': {type:Date, index: true},
+    'source': {type:String, index: true},
     'status': {type: String}
 });
 
