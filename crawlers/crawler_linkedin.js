@@ -5,6 +5,8 @@ const utils = require('./utils');
 const mongoose = require('mongoose');
 const conn = mongoose.createConnection(require('../config').DB.URL);
 const Job = require('../models/job')(conn);
+const Notification  = require('../models/notification')(conn);
+const User = require('../models/user')(conn);
 
 
 const log = console.log
@@ -63,6 +65,10 @@ module.exports = async function main (prefix, dataRel, pageMax, pageWaitMax) {
             })
             const length = processed.length;
             log(`${length} items to be saved`);
+
+            // get all user id
+            const userList = await User.find({});
+
             await Promise.all(processed.map(async(item) => {
                 // let linkedinModel = new Linkedin(item);
                 try{
@@ -72,10 +78,23 @@ module.exports = async function main (prefix, dataRel, pageMax, pageWaitMax) {
                     const d = await Job.findOneAndUpdate({
                         identifier: item.identifier
                     },item, {upsert: true, new: true} ) // if not exist, insert it
+                    
                     if(d != null){
-                        // log(`${d.company} - ${d.job} saved or updated`)
-                    }else{
-                        log('doc is null')
+                        console.log(`${d.company} - ${d.job} saved or updated`)
+                        await Promise.all(
+                            userList.map(async(item) => {
+                                await Notification.findOneAndUpdate({
+                                    'jobId': d._id,
+                                    'userId': item._id
+                                },{
+                                    'jobId': d._id,
+                                    'userId': item._id,
+                                    'source': d.source,
+                                    'postDate': d.postDate,
+                                    'status': 'unread'
+                                }, {upsert: true, new: true})
+                            })
+                        )
                     }
                     
                 }catch(e){

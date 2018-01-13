@@ -4,6 +4,8 @@ const utils = require('./utils');
 const mongoose = require('mongoose');
 const conn = mongoose.createConnection(require('../config').DB.URL);
 const Job = require('../models/job')(conn);
+const Notification  = require('../models/notification')(conn);
+const User = require('../models/user')(conn);
 
 const log = console.log
 
@@ -102,6 +104,9 @@ module.exports = async function main(){
 }
 
 async function save(info){
+    // get all user id
+    const userList = await User.find({});
+
     info.map(async (item)=>{
         item.postDate = utils.glassdoorPostDateGen(item.postDateRaw);
         item.identifier = utils.identifierGen(item.company, item.job, item.location, item.postDate);
@@ -111,8 +116,20 @@ async function save(info){
             },item, {upsert: true, new: true} ) // if not exist, insert it
             if(d != null){
                 console.log(`${d.company} - ${d.job} saved or updated`)
-            }else{
-                console.log('doc is null')
+                await Promise.all(
+                    userList.map(async(item) => {
+                        await Notification.findOneAndUpdate({
+                            'jobId': d._id,
+                            'userId': item._id
+                        },{
+                            'jobId': d._id,
+                            'userId': item._id,
+                            'source': d.source,
+                            'postDate': d.postDate,
+                            'status': 'unread'
+                        }, {upsert: true, new: true})
+                    })
+                )
             }
         }catch(e){
             console.log('error!!!');
