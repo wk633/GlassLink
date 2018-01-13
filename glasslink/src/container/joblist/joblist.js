@@ -12,42 +12,42 @@ const IconText = ({ type, text }) => (
 export default class JobList extends React.Component{
     render(){
         const dd = [{
-            _id: "5a585af19ab3bf31506d1b0e",
+            _id: "5a5a6f8ccf10eb431e7a78ba",
             userId: "5a5686ca732cb113f4027d6b",
             jobId: {
-            job: "Android Developer - Intern",
-            company: "Cardon Outreach",
-            location: "Columbus, OH, US",
-            postDate: "2018-01-09T22:35:27.685Z",
+            job: "MATLAB Mobile Summer Intern",
+            company: "MathWorks",
+            location: "Natick, MA, US",
+            postDate: "2018-01-13T20:41:28.126Z",
             source: "linkedin",
-            desc: "We believe that every team member contributes directly to MedData’s growth and success, and we are constantly searching for new talented, passionate and enthusiastic people who... careers-meddata.icims.com",
-            logoUrl: "http://www.linkedin.com/scds/common/u/images/themes/katy/ghosts/company/ghost_company_80x80_v1.png",
-            detailUrl: "Android Developer - Intern",
+            desc: "As an intern software engineer you will support a variety of software development activities in a fast paced engineering environment. MathWorks develops MATLAB and Simulink, the... bebee.com",
+            logoUrl: "https://media.licdn.com/mpr/mpr/shrinknp_100_100/AAEAAQAAAAAAAApAAAAAJGE2MDJjOTQ2LTU2N2EtNGIzNC05ZDY2LWEzZjJiYjk0Yzc3OA.png",
+            detailUrl: "https://www.linkedin.com/jobs/view/matlab-mobile-summer-intern-at-mathworks-568878680?trkInfo=searchKeywordString%3ASoftware%2BEngineer%2BIntern%2CsearchLocationString%3A%252C%2B%2Cvertical%3Ajobs%2CpageNum%3A0%2Cposition%3A14%2CMSRPsearchId%3A51569a1a-fca5-4178-a65b-81a3d0674de0&refId=51569a1a-fca5-4178-a65b-81a3d0674de0&trk=jobs_jserp_job_listing_text",
             __v: 0,
-            identifier: "18905f7e819f3ac1ec3ea2cc7d4f3cfe",
-            _id: "5a54b4c17f665434c3a6314b"
+            identifier: "ef1992f9a1a33fea9346be92e256e9f6",
+            _id: "5a5a62043a0cb668a7f87160"
             },
-            postDate: "2018-01-09T22:35:27.685Z",
+            postDate: "2018-01-13T20:41:28.126Z",
             source: "linkedin",
             status: "unread"
             },
             {
-            _id: "5a585af19ab3bf31506d1b0f",
+            _id: "5a5a6f8ccf10eb431e7a78bb",
             userId: "5a5686ca732cb113f4027d6b",
             jobId: {
-            job: "Software Engineering Returnship - Frontend Web Development, Team F",
-            company: "Udemy",
-            location: "San Francisco, CA, US",
-            postDate: "2018-01-09T22:35:27.685Z",
+            job: "Software Developer Intern",
+            company: "Florida Virtual School",
+            location: "Orlando, FL, US",
+            postDate: "2018-01-13T20:41:28.126Z",
             source: "linkedin",
-            desc: "We are looking for a frontend engineering intern to join us to work on a wide variety of initiatives to improve the Udemy website as well as the development experience for ... jobs.lever.co",
-            logoUrl: "https://media.licdn.com/mpr/mpr/shrinknp_100_100/AAIA_wDGAAAAAQAAAAAAAAxmAAAAJGZkOTdkNTJkLWM1MWItNGZlYi04YWEzLTYwNDg0YmJkZmMzYw.png",
-            detailUrl: "Software Engineering Returnship - Frontend Web Development, Team F",
+            desc: "Has the skills, abilities, knowledge and experience to be successful in functional area of expertise; Dedicates time and energy to keeping abreast of the latest information ... disabledperson.com",
+            logoUrl: "https://media.licdn.com/mpr/mpr/shrinknp_100_100/AAEAAQAAAAAAAA3mAAAAJDcwMDcyOGE5LTIwOTMtNDY0ZC04YjI0LTQzMzdjN2E0NzBhMg.png",
+            detailUrl: "https://www.linkedin.com/jobs/view/software-developer-intern-at-florida-virtual-school-568821316?trkInfo=searchKeywordString%3ASoftware%2BEngineer%2BIntern%2CsearchLocationString%3A%252C%2B%2Cvertical%3Ajobs%2CpageNum%3A0%2Cposition%3A20%2CMSRPsearchId%3A51569a1a-fca5-4178-a65b-81a3d0674de0&refId=51569a1a-fca5-4178-a65b-81a3d0674de0&trk=jobs_jserp_job_listing_text",
             __v: 0,
-            identifier: "220310af237f5957591d37d92a4819d4",
-            _id: "5a54d7277f665434c3a6320b"
+            identifier: "2b841ce29d67909ba175c0a9494f2ead",
+            _id: "5a5a62043a0cb668a7f87162"
             },
-            postDate: "2018-01-09T22:35:27.685Z",
+            postDate: "2018-01-13T20:41:28.126Z",
             source: "linkedin",
             status: "unread"
             }]
@@ -65,10 +65,11 @@ export default class JobList extends React.Component{
                             extra={<img width={60} alt="logo" src={item.jobId.logoUrl} />}
                         >
                             <List.Item.Meta
-                            title={<a href={item.jobId.detailUrl}>{item.jobId.company}</a>}
-                            description={item.jobId.job}
+                            title={<a href={item.jobId.detailUrl} target='_blank'>{item.jobId.company}</a>}
+                            description={item.jobId.job + ' | ' + item.jobId.postDate.split('T')[0]}
                             />
-                            {item.jobId.desc}
+                            <p>{item.jobId.desc}</p>
+                            <p>{}</p>
                         </List.Item>
                         )}
                     />
