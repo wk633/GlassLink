@@ -66,7 +66,7 @@ Router.get('/notification', (req, res)=>{
     .find({'userId': '5a5686ca732cb113f4027d6b', 'status': 'unread', 'source': source})
     .sort({'postDate': -1})
     .skip(start)
-    .limit(30)
+    .limit(100)
     .populate({
         path: 'jobId',
         model: Job // todo: Populating across Databases, need improve model import ways in the future
