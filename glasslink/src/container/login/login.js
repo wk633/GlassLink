@@ -1,7 +1,9 @@
 import React from 'react';
 import { Form, Icon, Input, Button, message} from 'antd';
 import axios from 'axios';
-import {Link, withRouter} from 'react-router-dom';
+import {Link, withRouter, Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {login} from '../../reducer/user';
 import './login.css';
 const FormItem = Form.Item;
 message.config({
@@ -10,32 +12,36 @@ message.config({
 
 @Form.create()
 @withRouter
+@connect(
+    state=>state.user,
+    {login}
+)
 class LogIn extends React.Component{
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
-                axios.post('/user/login', {user: values.userName, pwd: values.password})
-                .then(res=>{
-                    if(res.status === 200){
-                        if(res.data.code === 0){
-                            message.success('log in success');
-                            this.props.history.push('/joblist');
-                        }else{
-                            message.error(res.data.errmsg);
-                        }
-                    }else{
-                        message.error('network error');
-                    }
-                })
+                this.props.login({user: values.userName, pwd: values.password});
             }
         });
+    }
+    componentWillReceiveProps(nextProps){
+        console.log(nextProps)
+        if(nextProps.msg !== this.props.msg){
+            if(nextProps.msg.type === 'info'){
+                message.info(nextProps.msg.content);
+            }else if(nextProps.msg.type === 'error'){
+                message.error(nextProps.msg.content);
+            }
+        }
+        
     }
     render(){
         const { getFieldDecorator } = this.props.form;
         return (
             <div className='login-form-wrapper'>
+                {this.props.redirectTo ? <Redirect to={this.props.redirectTo} /> : null}
                 <Form onSubmit={this.handleSubmit} className="login-form">
                     <h2>Log In</h2>
                     <FormItem>

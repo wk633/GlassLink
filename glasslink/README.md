@@ -16,3 +16,8 @@ GlassLink is an combination of glassdoor and linkedin.
     - [store object in file for test purpose](https://www.npmjs.com/package/pickle)
     - [object.assign](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
 
+
+### redux
+- redux
+- react-redux
+- redux-thunk
