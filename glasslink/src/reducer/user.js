@@ -37,6 +37,24 @@ export function login({user, pwd}){
         })
     }
 }
+export function signup({user, pwd}) {
+    return dispatch => {
+        axios.post('user/signup', {user, pwd})
+        .then(res=>{
+            if(res.status === 200){
+                if(res.data.code === 0){
+                    dispatch(authSuccess(res.data.data));
+                }else{
+                    console.log(res.data.errmsg);
+                    dispatch(errmsg(res.data.errmsg));
+                }
+            }else{
+                dispatch('network error');
+            }
+        })
+    }
+}
+
 function authSuccess(data){
     return {type: AUTH_SUCCESS, payload: data}
 }

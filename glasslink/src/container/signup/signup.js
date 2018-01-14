@@ -1,7 +1,9 @@
 import React from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {Link, withRouter, Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
 import { Form, Icon, Input, Button, message} from 'antd';
 import axios from 'axios';
+import {signup} from '../../reducer/user';
 import './signup.css';
 
 const FormItem = Form.Item;
@@ -11,6 +13,10 @@ message.config({
 
 @Form.create()
 @withRouter
+@connect(
+    state=>state.user,
+    {signup}
+)
 class SignUp extends React.Component{
     state = {
         confirmDirty: false
@@ -42,21 +48,10 @@ class SignUp extends React.Component{
         this.props.form.validateFields((err, values) => {
           if (!err) {
             console.log('Received values of form: ', values);
-
-            axios.post('/user/signup', {user: values.userName, pwd: values.password})
-            .then(res=>{
-                if(res.status === 200){
-                    if(res.data.code === 0){
-                        // do something
-                        message.success('sign up success');
-                        this.props.history.push('/joblist');
-                    }else{
-                        message.error(res.data.errmsg);
-                    }
-                }else{
-                    message.error('network error');
-                }
-            })
+            if (!err) {
+                console.log('Received values of form: ', values);
+                this.props.signup({user: values.userName, pwd: values.password});
+            }
           }
         });
     }
@@ -64,6 +59,7 @@ class SignUp extends React.Component{
         const { getFieldDecorator } = this.props.form;
         return (
             <div className='signup-form-wrapper'>
+                {this.props.redirectTo ? <Redirect to={this.props.redirectTo} /> : null}
                 <Form onSubmit={this.handleSubmit} className="signup-form">
                     <h2>Sign Up</h2>
                     <FormItem>
